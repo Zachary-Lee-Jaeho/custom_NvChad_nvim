@@ -3,7 +3,16 @@ local on_attach = configs.on_attach
 local capabilities = configs.capabilities
 
 local lspconfig = require "lspconfig"
-local servers = { "clangd" }
+local servers = {
+  "clangd",
+  "pyright",
+  "tsserver",
+  "lua_ls",
+  "rust_analyzer",
+  "jsonls",
+  "bashls",
+  "cmake",
+}
 
 for _, lsp in ipairs(servers) do
   lspconfig[lsp].setup {
@@ -11,13 +20,6 @@ for _, lsp in ipairs(servers) do
     capabilities = capabilities,
   }
 end
-
-vim.api.nvim_create_autocmd("BufWritePre", {
-  buffer = buffer,
-  callback = function()
-    vim.lsp.buf.format { async = false }
-  end
-})
 
 -- Without the loop, you would have to manually set up each LSP
 --

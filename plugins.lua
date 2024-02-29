@@ -1,31 +1,41 @@
 local plugins = {
   {
-  "neovim/nvim-lspconfig",
-   config = function()
+    'stevearc/conform.nvim',
+  },
+  {
+    'nvimtools/none-ls.nvim',
+    requires = { "nvim-lua/plenary.nvim" },
+    config = function()
+      require "custom.configs.none-ls"
+    end,
+  },
+  {
+    "neovim/nvim-lspconfig",
+    config = function()
       require "plugins.configs.lspconfig"
       require "custom.configs.lspconfig"
-   end,
-},
+    end,
+  },
   {
-       "williamboman/mason.nvim",
-   opts = {
+    "williamboman/mason.nvim",
+    opts = {
       ensure_installed = {
         "lua-language-server",
         "clang-format",
         "clangd",
+        "stylua",
       },
     },
   },
-
-{
+  {
     "nvim-treesitter/nvim-treesitter",
     opts = {
       ensure_installed = {
-        -- defaults 
+        -- defaults
         "vim",
         "lua",
 
-        -- web dev 
+        -- web dev
         "html",
         "css",
         "javascript",
@@ -44,7 +54,6 @@ local plugins = {
       },
     },
   },
-
 }
 
 return plugins
