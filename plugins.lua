@@ -1,13 +1,16 @@
 local plugins = {
   {
-    'stevearc/conform.nvim',
+    "p00f/clangd_extensions.nvim",
+    config = function()
+      require "custom.config.clangd_extensions"
+    end,
   },
   {
-    'nvimtools/none-ls.nvim',
-    requires = { "nvim-lua/plenary.nvim" },
+    "stevearc/conform.nvim",
     config = function()
-      require "custom.configs.none-ls"
+      require "custom.configs.conform"
     end,
+    lazy = false,
   },
   {
     "neovim/nvim-lspconfig",

@@ -1,10 +1,9 @@
-local configs = require("plugins.configs.lspconfig")
+local configs = require "plugins.configs.lspconfig"
 local on_attach = configs.on_attach
 local capabilities = configs.capabilities
 
 local lspconfig = require "lspconfig"
 local servers = {
-  "clangd",
   "pyright",
   "tsserver",
   "lua_ls",
@@ -20,6 +19,54 @@ for _, lsp in ipairs(servers) do
     capabilities = capabilities,
   }
 end
+
+lspconfig["clangd"].setup {
+  on_attach = on_attach,
+  capabilities = capabilities,
+  handlers = {
+    ["textDocument/publishDiagnostics"] = function() end,
+  },
+}
+
+local mlirConf = require "lspconfig.configs"
+if not mlirConf.mlir_lsp then
+  mlirConf.mlir_lsp = {
+    default_config = {
+      cmd = { "/media/ssd/jaeho/llvmVersions/core-dnn/llvm-project/build/bin/mlir-lsp-server" },
+      root_dir = lspconfig.util.root_pattern ".git",
+      filetypes = { "mlir" },
+    },
+  }
+end
+if not mlirConf.tblgen_lsp then
+  mlirConf.tblgen_lsp = {
+    default_config = {
+      root_dir = lspconfig.util.root_pattern ".git",
+      cmd = {
+        "/media/ssd/jaeho/llvmVersions/core-dnn/llvm-project/build/bin/tblgen-lsp-server",
+        "--tablegen-compilation-database=./tablegen_compile_commands.yml",
+      },
+      filetypes = { "tablegen" },
+    },
+  }
+end
+-- tblgen-lsp-server
+
+lspconfig.mlir_lsp.setup {
+  settings = {
+    diagnostics = {
+      enable = false,
+    },
+  },
+}
+
+lspconfig.tblgen_lsp.setup {
+  settings = {
+    diagnostics = {
+      enable = false,
+    },
+  },
+}
 
 -- Without the loop, you would have to manually set up each LSP
 --
