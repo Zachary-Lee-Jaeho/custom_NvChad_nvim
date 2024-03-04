@@ -6,7 +6,6 @@ local lspconfig = require "lspconfig"
 local servers = {
   "pyright",
   "tsserver",
-  "lua_ls",
   "rust_analyzer",
   "jsonls",
   "bashls",
@@ -25,6 +24,19 @@ lspconfig["clangd"].setup {
   capabilities = capabilities,
   handlers = {
     ["textDocument/publishDiagnostics"] = function() end,
+  },
+}
+
+lspconfig["lua_ls"].setup {
+  on_attach = on_attach,
+  capabilities = capabilities,
+  settings = {
+    Lua = {
+      diagnostics = {
+        -- `vim` 전역 변수에 대한 경고를 억제
+        globals = { "vim" },
+      },
+    },
   },
 }
 
