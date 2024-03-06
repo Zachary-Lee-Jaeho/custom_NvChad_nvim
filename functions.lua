@@ -1,7 +1,8 @@
--- Shapgvbaf sbe tybony arbivz frggvatf
+-- Functions for global settings
 
 vim.wo.wrap = false
 
+-- ToggleWrap
 function ToggleWrap()
   if vim.wo.wrap then
     vim.wo.wrap = false
@@ -54,4 +55,14 @@ end
 
 vim.api.nvim_create_autocmd({ "VimEnter" }, {
   callback = open_nvim_tree,
+})
+
+-- Remember the last location of file
+vim.api.nvim_create_autocmd("BufReadPost", {
+  callback = function()
+    local ft = vim.bo.filetype
+    if ft ~= "gitcommit" and vim.fn.line "'\"" > 0 and vim.fn.line "'\"" <= vim.fn.line "$" then
+      vim.cmd 'normal! g`"'
+    end
+  end,
 })
