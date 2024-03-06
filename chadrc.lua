@@ -1,7 +1,7 @@
 -- @type ChadrcConfig
 local M = {}
 
--- {{{ Theme customization
+-- {{{ UI Customization
 M.ui = {
   theme = "jellybeans",
   changed_themes = {
@@ -11,6 +11,10 @@ M.ui = {
         grey_fg = "#515151",
       },
     },
+  },
+
+  nvdash = {
+    load_on_startup = true,
   },
 }
 -- }}}
@@ -33,12 +37,6 @@ opt.mouse = ""
 keymap.set("n", "<C-e>", "3<C-e>", { noremap = true, silent = true })
 keymap.set("n", "<C-y>", "3<C-y>", { noremap = true, silent = true })
 -- }}}
-
-M.ui = {
-  nvdash = {
-    load_on_startup = true,
-  },
-}
 
 require "custom.functions"
 
