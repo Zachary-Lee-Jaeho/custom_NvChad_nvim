@@ -1,8 +1,15 @@
 local plugins = {
   {
+    "github/copilot.vim",
+    config = function()
+      require "custom.configs.copilot"
+    end,
+    lazy = false,
+  },
+  {
     "p00f/clangd_extensions.nvim",
     config = function()
-      require "custom.config.clangd_extensions"
+      require "custom.configs.clangd_extensions"
     end,
   },
   {
